@@ -1,0 +1,11 @@
+C:\Users\lewon\source\repos\GA\GA\bin\Debug\netcoreapp3.1\GA.exe
+C:\Users\lewon\source\repos\GA\GA\bin\Debug\netcoreapp3.1\GA.deps.json
+C:\Users\lewon\source\repos\GA\GA\bin\Debug\netcoreapp3.1\GA.runtimeconfig.json
+C:\Users\lewon\source\repos\GA\GA\bin\Debug\netcoreapp3.1\GA.runtimeconfig.dev.json
+C:\Users\lewon\source\repos\GA\GA\bin\Debug\netcoreapp3.1\GA.dll
+C:\Users\lewon\source\repos\GA\GA\bin\Debug\netcoreapp3.1\GA.pdb
+C:\Users\lewon\source\repos\GA\GA\obj\Debug\netcoreapp3.1\GA.csprojAssemblyReference.cache
+C:\Users\lewon\source\repos\GA\GA\obj\Debug\netcoreapp3.1\GA.AssemblyInfoInputs.cache
+C:\Users\lewon\source\repos\GA\GA\obj\Debug\netcoreapp3.1\GA.AssemblyInfo.cs
+C:\Users\lewon\source\repos\GA\GA\obj\Debug\netcoreapp3.1\GA.dll
+C:\Users\lewon\source\repos\GA\GA\obj\Debug\netcoreapp3.1\GA.pdb
