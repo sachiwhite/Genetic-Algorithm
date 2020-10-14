@@ -28,14 +28,14 @@ namespace GA
 
         private double Fitness(int x, int y) => (2 * x * x + y + coefficient);
 
-        public void Solve()
+        public void Solve(int rangeStart, int rangeStop)
         {
             // initialize population
             List<Chromosome> chromosomes = new List<Chromosome>();
             for (int i = 0; i < populationNumber; i++)
             {
-                int firstValue = random.Next(1, 10);
-                int secondValue = random.Next(1, 10);
+                int firstValue = random.Next(rangeStart, rangeStop);
+                int secondValue = random.Next(rangeStart, rangeStop);
                 chromosomes.Add(new Chromosome(firstValue, secondValue));
             }
 
@@ -57,8 +57,8 @@ namespace GA
                     var fitness = Fitness(chromosomes[i].A, chromosomes[i].B);
                     chromosomes[i].Fitness = fitness;
                     fitnessValues[i] = fitness;
-                    chromosomes[i].FittingValue = 1 / fitness;
-                    fittingValues[i] = chromosomes[i].FittingValue;
+                   // chromosomes[i].FittingValue = 1 / fitness;
+                   fittingValues[i] = 1 / fitness;
                 }
 
                 if (chromosomes.FirstOrDefault(x => x.Fitness == 0) != null)
@@ -66,11 +66,12 @@ namespace GA
                     perfectChromosome = chromosomes.FirstOrDefault(x => x.Fitness == 0);
                     break;
                 }
-                double fittingSum = chromosomes.Sum(x => x.FittingValue);
+
+                double fittingSum = fittingValues.Sum();
                 for (int i = 0; i < chromosomes.Count; i++)
                 {
                     var c = chromosomes[i];
-                    Console.WriteLine($"Chromosome {i + 1}: {c.A}, {c.B}, {c.FittingValue}");
+                    Console.WriteLine($"Chromosome {i + 1}: {c}");
                 }
 
                 double[] probfitting = new double[populationNumber];
@@ -109,7 +110,7 @@ namespace GA
                 for (int i = 0; i < newPopulation.Count; i++)
                 {
                     var c = newPopulation[i];
-                    Console.WriteLine($"Chromosome {i + 1}: {c.A}, {c.B}, {c.FittingValue}");
+                    Console.WriteLine($"Chromosome {i + 1}: {c}");
                     newPopulation[i].ConvertToBinary();
                     Console.WriteLine("converted:" + newPopulation[i].BinaryRepresentationOfChromosome);
                 }

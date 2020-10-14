@@ -7,8 +7,10 @@ namespace GA
         public int A { get; private set; }
         public int B { get; private set; }
         public double Fitness { get; set; }
-        public double FittingValue { get; set; }
+       // public double FittingValue { get; set; }
         public double ProbFitting { get; set; }
+        public string BinaryA { get; private set; }
+        public string BinaryB { get; private set; }
         public string BinaryRepresentationOfChromosome { get; private set; }
 
         public Chromosome(Chromosome chromosomeToCopy)
@@ -16,7 +18,7 @@ namespace GA
             A = chromosomeToCopy.A;
             B = chromosomeToCopy.B;
             Fitness = chromosomeToCopy.Fitness;
-            FittingValue = chromosomeToCopy.FittingValue;
+            //FittingValue = chromosomeToCopy.FittingValue;
             ProbFitting = chromosomeToCopy.ProbFitting;
             BinaryRepresentationOfChromosome = chromosomeToCopy.BinaryRepresentationOfChromosome;
 
