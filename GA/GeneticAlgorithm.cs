@@ -25,7 +25,7 @@ namespace GA
 
             random = new Random();
         }
-
+        //2*4*4-32+0
         private double Fitness(int x, int y) => (2 * x * x + y + coefficient);
 
         public void Solve(int rangeStart, int rangeStop)
@@ -34,8 +34,8 @@ namespace GA
             List<Chromosome> chromosomes = new List<Chromosome>();
             for (int i = 0; i < populationNumber; i++)
             {
-                int firstValue = random.Next(rangeStart, rangeStop);
-                int secondValue = random.Next(rangeStart, rangeStop);
+                short firstValue = (short)random.Next(rangeStart, rangeStop);
+                short secondValue = (short)random.Next(rangeStart, rangeStop);
                 chromosomes.Add(new Chromosome(firstValue, secondValue));
             }
 
@@ -57,7 +57,6 @@ namespace GA
                     var fitness = Fitness(chromosomes[i].A, chromosomes[i].B);
                     chromosomes[i].Fitness = fitness;
                     fitnessValues[i] = fitness;
-                   // chromosomes[i].FittingValue = 1 / fitness;
                    fittingValues[i] = 1 / fitness;
                 }
 
@@ -111,8 +110,7 @@ namespace GA
                 {
                     var c = newPopulation[i];
                     Console.WriteLine($"Chromosome {i + 1}: {c}");
-                    newPopulation[i].ConvertToBinary();
-                    Console.WriteLine("converted:" + newPopulation[i].BinaryRepresentationOfChromosome);
+                    Console.WriteLine("converted:" + newPopulation[i]);
                 }
 
                 double crossoverParameter = 0.5;
@@ -141,11 +139,25 @@ namespace GA
 
                 foreach (var parent in parents)
                 {
-                    Console.WriteLine("Parent: " + parent.BinaryRepresentationOfChromosome);
+                    Console.WriteLine("Parent: " + parent);
                 }
 
-                int crossoverPosition = 2;
+                
+                int chromosomeLength = 1;
+                foreach (var p in newPopulation)
+                {
+                    int length = p.BinaryA.Length >= p.BinaryB.Length ? p.BinaryA.Length : p.BinaryB.Length;
+                    if (length > chromosomeLength)
+                        chromosomeLength = length;
+                }
+                int crossoverPosition = chromosomeLength>=16 ? chromosomeLength+2 : 2;
                 string[] crossoverMatrix = new string[populationNumber / 2];
+                for (int i=0;i<parents.Count;i++)
+                {
+                    var parent = parents[i];
+                    var crossoverString = $"{parent.BinaryA.PadLeft(chromosomeLength,'0')}{parent.BinaryB.PadLeft(chromosomeLength,'0')}";
+                    crossoverMatrix[i] = crossoverString;
+                }
                 for (int i = 0; i < populationNumber / 2; i++)
                 {
                     int index = i;
@@ -154,13 +166,11 @@ namespace GA
                     {
                         partnerIndex = 0;
                     }
-
-                    var chromosomeToCrossover = parents[index];
-                    var partnerChromosome = parents[partnerIndex];
-                    var start = chromosomeToCrossover.BinaryRepresentationOfChromosome.Remove(crossoverPosition);
-                    var end = partnerChromosome.BinaryRepresentationOfChromosome.Substring(crossoverPosition);
+                    var chromosomeToCrossover = crossoverMatrix[index];
+                    var partnerChromosome = crossoverMatrix[partnerIndex];
+                    var start = chromosomeToCrossover.Substring(0, crossoverPosition);
+                    var end = partnerChromosome.Substring(crossoverPosition);
                     crossoverMatrix[i] = $"{start}{end}";
-
                 }
 
                 //update parents after crossover
@@ -168,13 +178,13 @@ namespace GA
                 for (int i = 0; i < parents.Count; i++)
                 {
                     parents[i].UpdateBinaryRepresentation(crossoverMatrix[i]);
-                    Console.WriteLine("Parent: " + parents[i].BinaryRepresentationOfChromosome);
+                    Console.WriteLine("Parent: " + parents[i]);
                 }
 
                 for (int i = 0; i < parentIndices.Count; i++)
                 {
                     int index = parentIndices[i];
-                    newPopulation[index].UpdateBinaryRepresentation(parents[i].BinaryRepresentationOfChromosome);
+                    newPopulation[index].UpdateBinaryRepresentation(crossoverMatrix[i]);
                 }
 
                 Console.WriteLine("population after crossing-over");
@@ -183,21 +193,20 @@ namespace GA
                     Console.WriteLine($"Chromosome {i + 1}:{newPopulation[i]}");
 
                 }
+                
                 //mutations:
-
                 double mutationParameter = 0.1;
-                var chromosomeLength = newPopulation[0].BinaryRepresentationOfChromosome.Length;
                 int numberOfGenesToMutate = (int) Math.Ceiling(mutationParameter * newPopulation.Count *
                                                                chromosomeLength);
                 Tuple<int, int>[] mutationTuples =
-                    ReturnMutationTuple(numberOfGenesToMutate, newPopulation.Count, chromosomeLength);
+                    ReturnMutationTuple(numberOfGenesToMutate, newPopulation.Count, chromosomeLength*2);
 
 
                 for (int i = 0; i < numberOfGenesToMutate; i++)
                 {
                     int index = mutationTuples[i].Item1;
                     int position = mutationTuples[i].Item2;
-                    newPopulation[index].Mutate(position);
+                    newPopulation[index].Mutate(position, position/chromosomeLength, chromosomeLength);
                 }
 
                 //genes after mutation:
