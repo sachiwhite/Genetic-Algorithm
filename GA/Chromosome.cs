@@ -11,7 +11,6 @@ namespace GA
         public double ProbFitting { get; set; }
         public string BinaryA { get; private set; }
         public string BinaryB { get; private set; }
-      //  public string BinaryRepresentationOfChromosome { get; private set; }
 
         public Chromosome(Chromosome chromosomeToCopy)
         {
@@ -19,7 +18,6 @@ namespace GA
             B = chromosomeToCopy.B;
             Fitness = chromosomeToCopy.Fitness;
             ProbFitting = chromosomeToCopy.ProbFitting;
-            //BinaryRepresentationOfChromosome = chromosomeToCopy.BinaryRepresentationOfChromosome;
             BinaryA = chromosomeToCopy.BinaryA;
             BinaryB = chromosomeToCopy.BinaryB;
 
@@ -30,9 +28,7 @@ namespace GA
             this.B = B;
             BinaryA = Convert.ToString(A, 2);
             BinaryB = Convert.ToString(B, 2);
-            // BinaryRepresentationOfChromosome = ConvertToBinary();
         }
-        
 
         public override bool Equals(object? obj)
         {
@@ -53,21 +49,6 @@ namespace GA
         {
             return A.GetHashCode() ^ B.GetHashCode();
         }
-
-        //public string ConvertToBinary()
-        //{
-        //    string binaryA = Convert.ToString(this.A,2);
-        //    if (binaryA.Length < 4)
-        //    {
-        //        binaryA = binaryA.PadLeft(4, '0');
-        //    }
-        //    string binaryB = Convert.ToString(this.B,2);
-        //    if (binaryB.Length < 4)
-        //    {
-        //        binaryB = binaryB.PadLeft(4, '0');
-        //    }
-        //    return $"{binaryA}{binaryB}";
-        //}
 
         public void UpdateBinaryRepresentation(string binaryString)
         {

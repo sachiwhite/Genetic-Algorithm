@@ -6,8 +6,9 @@ namespace GA
     {
         static void Main(string[] args)
         {
-            GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(2, 1, 0, 6);
-            geneticAlgorithm.Solve(-4,4);
+            
+            GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(2, 1, -57, 6);
+            geneticAlgorithm.Solve(1,10);
             Console.WriteLine("Hello World!");
         }
     }

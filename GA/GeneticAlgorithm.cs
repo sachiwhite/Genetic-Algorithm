@@ -25,8 +25,7 @@ namespace GA
 
             random = new Random();
         }
-        //2*4*4-32+0
-        private double Fitness(int x, int y) => (2 * x * x + y + coefficient);
+        private double Fitness(int x, int y) => (a * x * x + b*y + coefficient);
 
         public void Solve(int rangeStart, int rangeStop)
         {
