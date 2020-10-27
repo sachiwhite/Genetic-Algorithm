@@ -194,7 +194,7 @@ namespace GA
                 }
                 
                 //mutations:
-                double mutationParameter = 0.1;
+                double mutationParameter = 0.15;
                 int numberOfGenesToMutate = (int) Math.Ceiling(mutationParameter * newPopulation.Count *
                                                                chromosomeLength);
                 Tuple<int, int>[] mutationTuples =
